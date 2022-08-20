@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
 const Form = () => {
-    const {values, setValues} = useState({task: "", description: ""});
-    const {task, setTask} = useState([]);
+    const [values, setValues] = useState({task: " ", description: " "});
+    
+    const [task, setTask] = useState([]);
 
     const handleChange = (e) =>{
         const name = e.target.name;
@@ -15,7 +16,8 @@ const Form = () => {
         e.preventDefault();
         if(values.task && values.description){
             const addTask = {...values, id: new Date().getTime().toString()};
-            setTask([...values, addTask]);
+            setTask([...task, addTask]);
+            console.log(task);
             setValues({task: "", description: ""});
         }
         
@@ -67,7 +69,19 @@ const Form = () => {
             <button type="submit" className="btn" onClick={handleSubmit}>Add Task</button>
         </form>
         <div className='tasks'>
-            <p>No task to display</p>
+            {task.map((item)=>{
+                const {task, description, id} = item;
+                return(
+                    <div className="todo" key={id}>
+                            <div>
+                                <p>{task}</p>
+                            </div>
+                            <div>
+                                <p>{description}</p>
+                            </div>
+                        </div>
+                )
+            })}
         </div>
         
     </div>

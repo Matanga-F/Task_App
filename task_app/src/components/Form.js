@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
 
 const Form = () => {
-    const {text, setText} = useState({task: "", description: "", atendee: "", tiime: ""});
+    const {values, setValues} = useState({task: "", description: ""});
     const {task, setTask} = useState([]);
 
     const handleChange = (e) =>{
         const name = e.target.name;
         const value = e.target.value;
-        if (text){
-            setTask({...task, [name]: value})
-        }
+        setValues({...values, [name] : value});
 
     }
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        if(values.task && values.description){
+            const addTask = {...values, id: new Date().getTime().toString()};
+            setTask([...values, addTask]);
+            setValues({task: "", description: ""});
+        }
+        
     }
 
 
@@ -29,6 +33,7 @@ const Form = () => {
                 name ="task"
                 placeholder='Add task'
                 id="task"
+                value={values.task}
                 onChange={handleChange}/><br />
                 </div>
                 <div>
@@ -37,14 +42,16 @@ const Form = () => {
                 name="description" 
                 placeholder='Task contents'
                 id="description" 
+                value = {values.description}
                 onChange={handleChange} /><br />
                 </div>
-                <div>
+                {/* <div>
                 <label>Atendee: </label><br />
                 <input type="email"
                 placeholder='john@gmail.com'
                 name="description" 
                 id="email" 
+                value = {values.atendee}
                 onChange={handleChange} /><br />
                 </div>
                 <div>
@@ -53,13 +60,14 @@ const Form = () => {
                 placeholder="23h59"
                 name="description" 
                 id="email" 
+                value = {values.time}
                 onChange={handleChange} /><br />
-                </div>
+                </div> */}
             </div>
-            <button type="submit" className="btn" onSubmit={handleSubmit}>Add Task</button>
+            <button type="submit" className="btn" onClick={handleSubmit}>Add Task</button>
         </form>
-        <div>
-            <h4>No task to display</h4>
+        <div className='tasks'>
+            <p>No task to display</p>
         </div>
         
     </div>

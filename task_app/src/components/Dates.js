@@ -8,9 +8,10 @@ const Dates = () => {
 
     let month = months[date.getMonth()]
     let day = days[date.getDay()]
+    let today = date.getDate();
   return (
     <div>
-      <p>{day}, {month} {date.getDay()}</p>
+      <p>{day}, {today} {month}</p>
     </div>
   )
 }
